@@ -1,48 +1,31 @@
-# TODOMVC
+# TODOMVC Backend
 
-Here, on the frontend, I propose to highlight the differences between using [React](https://github.com/facebook/react) with the imperative and functional paradigms. As [React](https://github.com/facebook/react) is a vue library, this difference is visible only in the vue layer.
+This repository is a duplicate from [AntoineCheron/todomvc](https://github.com/AntoineCheron/todomvc).
 
-Within the imperative paradigm, classes are used. On the ohter hand, within the functional paradigm, the React hooks are used.
+Yet, this repository copies only the backend. The frontend has been deleted. Also, only the REST API is kept.
 
-In addition, I propose a REST API to enable the design of new versions of TODOMVC that use a backend.
-In my opinion, it could be a nice addition to TODOMVC in order to help developers learn how to use a REST API within a MVC frontend.
-I consider this as an interesting point as the design of frontends using a REST API became an industry standard.
-
-I also added a [GraphQL](https://graphql.org/) implementation for those who would like to discover how to design frontends on top of GraphQL APIs.
+The code in this repository serve a research purpose. It is designed to lead an experiment with developers.
 
 ## Project Structure
-
-The two backends are shipped into a single Java Application, and the two versions of the frontend into a single application too. To know more about this, read the README of each one: [frontend](/frontend) and [backend](/backend).
-
-If you're not familiar with this, the frontend and backend terms refers to the architecture used. These terms have been explained [here](https://www.geeksforgeeks.org/frontend-vs-backend/).
 
 ## Prerequisites
 
 You need to have:
 
 - A Java Development Kit (JDK) version 11 or later
-- [Node JS](https://nodejs.org/en/)
 
 ## How to install?
 
 Open a terminal, go to the folder where you want to save this project and then type:
 
 ```sh
-git clone https://github.com/AntoineCheron/todomvc.git
-cd todomvc
-
-cd frontend
-npm install
+git clone https://github.com/evolvable-by-design/todomvc-backend.git
+cd todomvc-backend
 ```
 
 ## How to run?
 
-- Frontend: see the [README of the frontend directory](/frontend).
 - Backend: see the [README of the backend directory](/backend).
-
-## Contributing
-
-Simply [open an issue](https://github.com/AntoineCheron/todomvc/issues/new/choose) to get in touch and propose your contribution.
 
 ## License
 
