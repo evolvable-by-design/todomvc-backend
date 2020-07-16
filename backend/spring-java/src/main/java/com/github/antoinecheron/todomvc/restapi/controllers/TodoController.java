@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
+import reactor.util.function.Tuples;
 
 import com.github.antoinecheron.todomvc.commons.models.Todo;
 import com.github.antoinecheron.todomvc.restapi.hypermedia.HypermediaRepresentation;
+import com.github.antoinecheron.todomvc.restapi.models.ApiError;
 import com.github.antoinecheron.todomvc.restapi.models.TodoCreationRequest;
 import com.github.antoinecheron.todomvc.restapi.models.TodoUpdateRequest;
 import com.github.antoinecheron.todomvc.commons.services.TodoService;
@@ -33,7 +35,7 @@ public class TodoController {
   public Mono<HypermediaRepresentation<Todo>> createTodo (@RequestBody Publisher<TodoCreationRequest> todoCreationRequestStream) {
     return Mono.fromDirect(todoCreationRequestStream)
       .flatMap(Validators::validateTodoCreationRequest)
-      .flatMap(todoCreationRequest -> todoService.create(todoCreationRequest.getTitle()))
+      .flatMap(todoCreationRequest -> todoService.create(todoCreationRequest.getTitle(), todoCreationRequest.getDueDate()))
       .map(TodoController::addHypermediaControls);
   }
 
@@ -41,7 +43,17 @@ public class TodoController {
   public Mono<HypermediaRepresentation<Todo>> updateTodo(@PathVariable String id, @RequestBody Publisher<TodoUpdateRequest> todoUpdateRequestStream) {
     return Mono.fromDirect(todoUpdateRequestStream)
       .flatMap(Validators::validateTodoUpdateRequest)
-      .flatMap(todoUpdateRequest -> todoService.update(id, todoUpdateRequest.getTitle(), todoUpdateRequest.isCompleted()))
+      .flatMap(todoUpdateRequest ->
+        todoService.findById(id)
+          .map(existingTodo -> Tuples.of(existingTodo, todoUpdateRequest))
+          .switchIfEmpty(Mono.error(new ApiError("Todo with id " + id + " not found.", 404)))
+      )
+      .flatMap(tuple -> {
+        final var todo = tuple.getT1();
+        final var todoUpdateRequest = tuple.getT2();
+
+        return todoService.update(id, todoUpdateRequest.getTitle(), todoUpdateRequest.isCompleted(), todo.getDueDate());
+      })
       .map(TodoController::addHypermediaControls);
   }
 

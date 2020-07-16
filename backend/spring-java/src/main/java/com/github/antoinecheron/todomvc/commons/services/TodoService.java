@@ -1,5 +1,6 @@
 package com.github.antoinecheron.todomvc.commons.services;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,18 +29,19 @@ public class TodoService {
     return this.todoRepository.findById(id);
   }
 
-  public Mono<Todo> create(String title) {
+  public Mono<Todo> create(String title, LocalDate dueDate) {
     final var todo = new Todo(
       UUID.randomUUID().toString(),
       title,
-      false
+      false,
+      dueDate
     );
 
     return this.todoRepository.create(todo);
   }
 
-  public Mono<Todo> update(String id, String title, boolean completed) {
-    return this.todoRepository.update(new Todo(id, title, completed));
+  public Mono<Todo> update(String id, String title, boolean completed, LocalDate dueDate) {
+    return this.todoRepository.update(new Todo(id, title, completed, dueDate));
   }
 
   public Mono<Void> delete(String id) {
