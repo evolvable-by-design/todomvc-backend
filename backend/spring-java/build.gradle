@@ -51,6 +51,10 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.12'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
 
+    compile 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.7.4'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.7.4'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.7.4'
+
     components {
         withModule('org.springframework:spring-beans') {
             allVariants {
