@@ -33,6 +33,14 @@ public class TodoRepository {
     }
   }
 
+  public Mono<Todo> findById(String id) {
+    return client.select()
+      .from(Todo.class)
+      .matching(Criteria.where("id").is(id))
+      .fetch()
+      .one();
+  }
+
   public Mono<Todo> create(Todo todo) {
     return client.insert()
       .into(Todo.class)

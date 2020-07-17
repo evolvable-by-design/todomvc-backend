@@ -24,6 +24,10 @@ public class TodoService {
     return this.todoRepository.findAllWithStatus(status);
   }
 
+  public Mono<Todo> findById(String id) {
+    return this.todoRepository.findById(id);
+  }
+
   public Mono<Todo> create(String title) {
     final var todo = new Todo(
       UUID.randomUUID().toString(),
