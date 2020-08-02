@@ -1,5 +1,6 @@
 package com.github.antoinecheron.todomvc.restapi.controllers;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import reactor.core.publisher.Mono;
@@ -14,10 +15,10 @@ final class Validators {
   private Validators() {}
 
   static Mono<TodoCreationRequest> validateTodoCreationRequest (TodoCreationRequest toValidate) {
-    if (!toValidate.getTitle().isEmpty() && !toValidate.getTitle().isBlank()) {
+    if (isValid(toValidate.getTitle()) && isValid(toValidate.getDueDate())) {
       return Mono.just(toValidate);
     } else {
-      return Mono.error(new ApiError("Incorrect title, it must not be empty neither blank", 400));
+      return Mono.error(new ApiError("Incorrect title or dueDate, they must not be empty, null neither blank", 400));
     }
   }
 
@@ -38,6 +39,10 @@ final class Validators {
 
   private static boolean isValid(String s) {
     return !s.isBlank() && !s.isEmpty();
+  }
+
+  private static boolean isValid(LocalDate d) {
+    return d != null;
   }
 
 }

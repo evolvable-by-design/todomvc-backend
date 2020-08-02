@@ -1,6 +1,14 @@
-# TODOMVC Backends - First version, no evolution
+# TODOMVC Backends - Evolution 1
 
-You can use the [OpenAPI documentation of the REST API](/openapi.yml) to discover how to use it. Its base URL is `http://localhost:8080/rest`. 
+## Evolution 1 - Change log and hints
+
+- Type of evolution: Add or Remove Parameter
+- Actual Evolution on the API: Add a required `dueDate` body parameter of type date (not date-time) to POST /todo
+- Breaking Clients: Yes
+
+**How to manage this evolution on the UI?**
+
+Simply use the Windows prompt API to request the user to input this new information. Example: https://www.w3schools.com/jsref/met_win_prompt.asp
 
 ### How to start?
 
